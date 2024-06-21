@@ -289,5 +289,34 @@ void pesquisarFuncionario() {
 }
 
 void pesquisarEstadiasCliente() {
-    // Implemente aqui o código para pesquisar estadias de um cliente
+    FILE *arquivo;
+    int codigoPesquisa;
+    Estadia estadia;
+
+    printf("Digite o código da estadia: ");
+    scanf("%d", &codigoPesquisa);
+
+    arquivo = fopen("estadias_cadastro.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }else{
+
+    while (fscanf(arquivo, "%d %s %s %d %d", &estadia.codigo_estadia, estadia.data_entrada, estadia.data_saida, &estadia.quantidade_diarias, &estadia.numero_quarto) != EOF) {
+        if (estadia.codigo_estadia == codigoPesquisa) {
+            printf("\n\nCódigo: %d\n",estadia.codigo_estadia);
+            printf("Data de entrada: %s\n",estadia.data_entrada);
+            printf("Data de saida: %s\n",estadia.data_saida);
+            printf("Quantidade de diarias: %d\n",estadia.quantidade_diarias);
+            printf("numero do quarto: %d\n",estadia.numero_quarto);
+            fclose(arquivo);
+            return;
+        }
+    }
+    
+    }
+
+    printf("Estadia não encontrado.\n");
+    fclose(arquivo);
+}
 }
