@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <time.h>
 
 // Definição das estruturas
 typedef struct {
@@ -94,14 +96,20 @@ int main() {
 
     return 0;
 }
-
+int gerarCodigoAleatorio() {
+    return rand() % 1000 + 1; // Gera um código aleatório entre 1 e 1000
+}
 // Implementação das funções de cadastro
-void cadastrarCliente() {
-    FILE *arquivo, *arquivoAux;
-    Cliente novoCliente, clienteAux;
 
-    printf("Digite o código do cliente: ");
-    scanf("%d", &novoCliente.codigo);
+void cadastrarCliente() {
+    FILE *arquivo;
+    Cliente novoCliente;
+
+    srand(time(NULL)); // Inicializa a semente para geração de números aleatórios
+
+    novoCliente.codigo = gerarCodigoAleatorio(); // Gera um código aleatório para o cliente
+
+    printf("Código do cliente: %d\n", novoCliente.codigo);
 
     printf("Digite o nome do cliente: ");
     scanf("%s", novoCliente.nome);
@@ -112,33 +120,18 @@ void cadastrarCliente() {
     printf("Digite o telefone do cliente: ");
     scanf("%d", &novoCliente.telefone);
 
-    arquivo = fopen("clientes.txt", "r");
-    if (arquivo != NULL) {
-        while (fscanf(arquivo, "%d %s %s %d", &novoCliente.codigo, novoCliente.nome, novoCliente.endereco, &novoCliente.telefone) != EOF) {
-            if (novoCliente.codigo == novoCliente.codigo) {
-                printf("Código de cliente já cadastrado! Tente novamente.\n");
-                fclose(arquivo);
-                return;
-            }
-        }
-        fclose(arquivo);
-    }
-
     arquivo = fopen("clientes.txt", "a");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         return;
     }
 
-    fprintf(arquivo, "Código do cliente: %d\n", novoCliente.codigo);
-    fprintf(arquivo, "Nome do cliente: %s\n", novoCliente.nome);
-    fprintf(arquivo, "Endereço do cliente: %s\n", novoCliente.endereco);
-    fprintf(arquivo, "Telefone do cliente: %d\n", novoCliente.telefone);
-
+    fprintf(arquivo, "%d %s %s %d\n", novoCliente.codigo, novoCliente.nome, novoCliente.endereco, novoCliente.telefone);
     fclose(arquivo);
 
     printf("Cliente cadastrado com sucesso!\n");
 }
+
 void cadastrarFuncionario() {
     FILE *arquivo;
     Funcionario novoFuncionario;
@@ -157,7 +150,7 @@ void cadastrarFuncionario() {
 
     printf("Digite o salário do funcionário: ");
     scanf("%f", &novoFuncionario.salario);
-    
+
     arquivo = fopen("funcionarios.txt", "r");
     if (arquivo != NULL) {
         while (fscanf(arquivo, "%d %s %d %s %f", &novoFuncionario.codigo, novoFuncionario.nome, &novoFuncionario.telefone, novoFuncionario.cargo, &novoFuncionario.salario) != EOF) {
