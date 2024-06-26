@@ -159,10 +159,13 @@ void cadastrarCliente() {
     printf("Código do cliente: %d\n", novoCliente.codigo);
 
     printf("Digite o nome do cliente: ");
-    scanf("%s", novoCliente.nome);
+    getchar(); // Limpa o buffer do teclado
+    fgets(novoCliente.nome, 100, stdin);
+    novoCliente.nome[strcspn(novoCliente.nome, "\n")] = '\0';
 
     printf("Digite o endereço do cliente: ");
-    scanf("%s", novoCliente.endereco);
+    fgets(novoCliente.endereco, 200, stdin);
+    novoCliente.endereco[strcspn(novoCliente.endereco, "\n")] = '\0';
 
     printf("Digite o telefone do cliente: ");
     scanf("%d", &novoCliente.telefone);
@@ -187,13 +190,17 @@ void cadastrarFuncionario() {
     printf("o código do funcionário: %d \n",novoFuncionario.codigo);
 
     printf("Digite o nome do funcionário: ");
-    scanf("%s", novoFuncionario.nome);
+    getchar(); // Limpa o buffer do teclado
+    fgets(novoFuncionario.nome, 100, stdin);
+    novoFuncionario.nome[strcspn(novoFuncionario.nome, "\n")] = '\0';
 
     printf("Digite o telefone do funcionário: ");
     scanf("%d", &novoFuncionario.telefone);
 
     printf("Digite o cargo do funcionário: ");
-    scanf("%s", novoFuncionario.cargo);
+    getchar();
+    fgets(novoFuncionario.cargo,100,stdin);
+    novoFuncionario.cargo[strcspn(novoFuncionario.cargo, "\n")] = '\0';
 
     printf("Digite o salário do funcionário: ");
     scanf("%f", &novoFuncionario.salario);
